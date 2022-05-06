@@ -15,6 +15,7 @@ const FileUploadModal = () => {
   }
   const [selectedFiles, setSelectedFiles] = useState<FilesState>(initialState)
   const [showUploadModal, setShowUploadModal] = useRecoilState(uploadModalState)
+  const [sending, setSending] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -39,6 +40,7 @@ const FileUploadModal = () => {
 
   const uploadToStogare = async () => {
     if (!selectedFiles.files.length) return alert('Please select files')
+    setSending(true)
     let urls: string[] = []
     for (const file of selectedFiles.files) {
       const storageRef = ref(storage, `${currentChat?.id}/${file.name}`)
@@ -50,11 +52,14 @@ const FileUploadModal = () => {
     if (currentChat && user?.email) {
       await sendMessage(currentChat.id, user, `Sent you files`, urls)
     }
+    setSending(false)
+    setShowUploadModal(false)
+    setSelectedFiles(initialState)
   }
   return (
     <div className="flex-col-between box-shadow absolute max-h-[50vh] min-h-[40%] min-w-[80%] max-w-md space-y-4 rounded-lg bg-white p-3">
       FileUploadModal
-      <div className="flex-row-center max-h-[30vh] gap-2 space-x-3 overflow-x-auto flex-wrap scrollbar-none">
+      <div className="flex-row-center max-h-[30vh] flex-wrap gap-2 space-x-3 overflow-x-auto scrollbar-none">
         {selectedFiles?.previews.map((p, idx) => (
           <MediaFile key={idx} url={p} />
         ))}
@@ -97,8 +102,9 @@ const FileUploadModal = () => {
         <button
           className="button bg-emerald-500 text-base"
           onClick={uploadToStogare}
+          disabled={sending}
         >
-          Upload
+          {sending ? 'Sending' : 'Send'}
         </button>
       </div>
     </div>

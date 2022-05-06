@@ -18,7 +18,7 @@ const ChatList = () => {
   }, [])
 
   return (
-    <div className="flex-col-around flex-1 overflow-y-auto bg-teal-500">
+    <div className="flex-col-around flex-1 justify-start gap-2 py-2 overflow-y-auto bg-teal-500">
       {chatUsers.map((chatUser) => (
         <ChatItem key={chatUser.uid} user={chatUser} />
       ))}
@@ -43,7 +43,7 @@ const ChatItem: React.FC<{ user: User }> = ({ user }) => {
 
   return (
     <div
-      className="flex-row-between group w-full bg-white text-sm font-bold text-gray-700 hover:bg-rose-300 sm:text-sm md:text-base"
+      className="flex-row-between group w-full bg-white text-sm font-bold text-gray-700 hover:bg-rose-300 sm:text-sm md:text-base p-1 rounded"
       onClick={() => {
         if (self?.email && user.email) {
           if (!currentChat?.users?.includes(user.email)) {

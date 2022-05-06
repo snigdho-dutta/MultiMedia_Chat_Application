@@ -35,12 +35,16 @@ const MessageContainer = () => {
       ),
     []
   )
+  console.log(messages)
 
   return (
     <div className="flex w-full flex-1 cursor-default flex-col space-y-2  overflow-auto bg-sky-500/50 p-2 py-4 scrollbar-none">
       {messages &&
         messages.map((message, idx) => (
-          <Message message={message} key={idx + message.timestamp.seconds} />
+          <Message
+            message={message}
+            key={idx + message.timestamp?.toString() || Date.now()}
+          />
         ))}
     </div>
   )
