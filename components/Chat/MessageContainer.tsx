@@ -66,7 +66,7 @@ const Message: React.FC<{ message: Message }> = ({ message }) => {
         className="h-5 w-5 self-start rounded-full"
       />
       {files &&
-        files.length &&
+        files?.length &&
         files.map((file, idx) => (
           <div className="flex-col-center" key={'message' + idx}>
             <MediaFile url={file} />
