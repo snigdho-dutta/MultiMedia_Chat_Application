@@ -69,8 +69,7 @@ const Message: React.FC<{ message: Message }> = ({ message }) => {
         files.length &&
         files.map((file, idx) => (
           <div className="flex-col-center" key={'message' + idx}>
-            <MediaFile url={file} key={idx + 1} />
-            <p>{text}</p>
+            <MediaFile url={file} />
           </div>
         ))}
       {!files?.length && (
