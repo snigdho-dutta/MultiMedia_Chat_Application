@@ -68,12 +68,12 @@ const Message: React.FC<{ message: Message }> = ({ message }) => {
       {files &&
         files.length &&
         files.map((file, idx) => (
-          <div className="flex-col-center">
+          <div className="flex-col-center" key={'message' + idx}>
             <MediaFile url={file} key={idx + 1} />
             <p>{text}</p>
           </div>
         ))}
-      {!files.length && (
+      {!files?.length && (
         <p className="max-w-[160px] text-sm sm:max-w-[60%]">{text}</p>
       )}
       <Moment format="DD-MM-YY" className="self-end text-[10px] text-gray-500">
