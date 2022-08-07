@@ -1,4 +1,3 @@
-import { addDoc, collection } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import React, { ChangeEvent, useRef, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -39,7 +38,7 @@ const FileUploadModal = () => {
   const user = useRecoilValue(userState)
 
   const uploadToStogare = async () => {
-    if (!selectedFiles.files.length) return alert('Please select files')
+    if (!selectedFiles?.files?.length) return alert('Please select files')
     setSending(true)
     let urls: string[] = []
     for (const file of selectedFiles.files) {
@@ -96,7 +95,9 @@ const FileUploadModal = () => {
               inputRef && inputRef?.current?.click()
             }}
           >
-            {selectedFiles.files.length > 1 ? 'Add More Files' : 'Select Files'}
+            {selectedFiles?.files?.length > 1
+              ? 'Add More Files'
+              : 'Select Files'}
           </button>
         </div>
         <button
