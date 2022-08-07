@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Layout from '../components/Layout'
-import { onAuthStateChanged, } from 'firebase/auth'
+import { onAuthStateChanged } from 'firebase/auth'
 import { useEffect, useState } from 'react'
 import { auth, db } from '../firebase.config'
 import { RecoilRoot } from 'recoil'
@@ -9,7 +9,7 @@ import { User } from '../types'
 import Login from '../components/Home/Login'
 import Loader from '../components/Loader'
 import { userState } from '../atoms'
-import { collection, addDoc, setDoc, doc } from 'firebase/firestore'
+import { setDoc, doc } from 'firebase/firestore'
 import updateStatus from '../utils/realtimeUpdate'
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -19,7 +19,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(
     () =>
       onAuthStateChanged(auth, (user) => {
-        
         if (user) {
           const {
             displayName: name,
@@ -40,7 +39,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     []
   )
   if (loading) return <Loader />
-  if (!user) return <Login />
+  // if (!user) return <Login />
 
   return (
     <RecoilRoot
@@ -48,9 +47,13 @@ function MyApp({ Component, pageProps }: AppProps) {
         set(userState, user)
       }}
     >
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      {user ? (
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      ) : (
+        <Login />
+      )}
     </RecoilRoot>
   )
 }

@@ -1,22 +1,16 @@
-import {
-  collection,
-  doc,
-  getDocs,
-  onSnapshot,
-  orderBy,
-  query,
-  Timestamp,
-} from 'firebase/firestore'
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import Moment from 'react-moment'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { currentChatState, userState } from '../../atoms'
 import { db } from '../../firebase.config'
-import { Chat, Message } from '../../types'
+import { Message } from '../../types'
 import MediaFile from './MediaFile'
 
 const MessageContainer = () => {
   const [currentChat, setCurrentChat] = useRecoilState(currentChatState)
+
+  console.log(currentChat)
 
   const [messages, setMessages] = useState<Message[] | []>([])
 
